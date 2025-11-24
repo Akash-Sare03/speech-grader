@@ -92,7 +92,7 @@ def main():
                         st.write(f"**(2) Flow & Structure:** {flow_score}/5")
                         st.write(f"*{flow_feedback}*")
                         st.write("---")
-                        
+
                     with col2:
                         st.write(f"**(3) Good-to-have Keywords:** {good_score}/10")
                         st.write("---")
@@ -164,6 +164,53 @@ def main():
         
         else:
             st.error("Please enter some text to analyze.")
+
+    st.write("---")
+    st.subheader("📄 JSON Output")
+
+    # Create JSON structure
+    output_data = {
+        "overall_score": total_score,
+        "word_count": len(transcript_text.split()),
+        "criteria": [
+            {
+                "criterion": "Content & Structure",
+                "score": content_score,
+                "max_score": 40,
+                "components": [
+                    {"name": "Salutation", "score": salutation_score, "max_score": 5},
+                    {"name": "Must-have Keywords", "score": must_score, "max_score": 20},
+                    {"name": "Good-to-have Keywords", "score": good_score, "max_score": 10},
+                    {"name": "Flow", "score": flow_score, "max_score": 5}
+                ]
+            },
+            {
+                "criterion": "Delivery & Style", 
+                "score": delivery_score,
+                "max_score": 60,
+                "components": [
+                    {"name": "Speech Rate", "score": speech_score, "max_score": 10},
+                    {"name": "Grammar", "score": grammar_score, "max_score": 10},
+                    {"name": "Vocabulary", "score": vocab_score, "max_score": 10},
+                    {"name": "Filler Words", "score": filler_score, "max_score": 15},
+                    {"name": "Sentiment", "score": sentiment_score, "max_score": 15}
+                ]
+            }
+        ]
+    }
+
+    # Display JSON
+    st.json(output_data)
+
+    # Download button
+    import json
+    json_str = json.dumps(output_data, indent=2)
+    st.download_button(
+        label="📥 Download JSON Results",
+        data=json_str,
+        file_name="speech_analysis_results.json",
+        mime="application/json"
+    )
 
 if __name__ == "__main__":
     main()
