@@ -1,0 +1,7 @@
+streamlit
+language-tool-python
+vaderSentiment
+nltk
+lexicalrichness
+pandas
+textblob
