@@ -12,6 +12,47 @@ An AI-powered tool that analyzes and scores student self-introductions based on 
 
 ---
 
+## 📊 Output Formats
+
+The application provides analysis results in **two formats**:
+
+### 1. User Interface (UI) Output
+- Clean, visual display of scores and feedback
+- Detailed breakdown by categories
+- Improvement suggestions
+- Progress indicators
+
+### 2. JSON Output
+- Structured data format for programmatic use
+- Downloadable JSON file
+- Contains all scores, feedback, and metadata
+- Compatible with APIs and other applications
+
+#### JSON Structure Example:
+```json
+{
+  "overall_score": 85,
+  "word_count": 150,
+  "criteria": [
+    {
+      "criterion": "Content & Structure",
+      "score": 35,
+      "max_score": 40,
+      "components": [
+        {
+          "name": "Salutation",
+          "score": 4,
+          "max_score": 5,
+          "feedback": "Good salutation found"
+        }
+      ]
+    }
+  ],
+  "improvement_suggestions": ["Suggestion 1", "Suggestion 2"]
+}
+```
+---
+
 ## Features
 
 - **Content Analysis**: Checks salutation, keyword presence, and flow structure
@@ -103,3 +144,10 @@ The tool uses a comprehensive 100-point scoring system:
 - NLP Libraries: NLTK, VADER, TextBlob, LexicalRichness
 
 - Grammar Checking: Rule-based system with TextBlob
+
+---
+
+## Documentation
+- [Local Deployment Guide (PDF)](DEPLOYMENT_GUIDE.pdf)
+
+---
