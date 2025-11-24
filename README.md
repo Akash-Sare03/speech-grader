@@ -2,6 +2,12 @@
 
 An AI-powered tool that analyzes and scores student self-introductions based on communication rubrics. The tool provides detailed feedback on content, delivery, language, and engagement aspects of speech.
 
+## 🚀 Live Demo
+
+**Try the application now:** [Speech Grader AI Live Demo](https://speech-grader.streamlit.app/)
+
+*No installation required - use directly in your browser!*
+
 ## Features
 
 - **Content Analysis**: Checks salutation, keyword presence, and flow structure
