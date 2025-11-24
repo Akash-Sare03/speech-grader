@@ -1,6 +1,7 @@
 import streamlit as st
 import sys
 import os
+import json
 
 # Add the src folder to the path
 sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
@@ -157,6 +158,56 @@ def main():
                             st.write(suggestion)
                     else:
                         st.success("🎉 Excellent performance! Keep up the good work!")
+
+                    # JSON Output Section
+                    st.write("---")
+                    st.subheader("📄 JSON Output")
+                    
+                    # Create the JSON structure
+                    output_data = {
+                        "overall_score": total_score,
+                        "word_count": len(transcript_text.split()),
+                        "criteria": [
+                            {
+                                "criterion": "Content & Structure",
+                                "score": content_score,
+                                "max_score": 40,
+                                "components": [
+                                    {"name": "Salutation", "score": salutation_score, "max_score": 5, "feedback": salutation_feedback},
+                                    {"name": "Must-have Keywords", "score": must_score, "max_score": 20, "feedback": keyword_feedback},
+                                    {"name": "Good-to-have Keywords", "score": good_score, "max_score": 10, "feedback": keyword_feedback},
+                                    {"name": "Flow", "score": flow_score, "max_score": 5, "feedback": flow_feedback}
+                                ]
+                            },
+                            {
+                                "criterion": "Delivery & Style", 
+                                "score": delivery_score,
+                                "max_score": 60,
+                                "components": [
+                                    {"name": "Speech Rate", "score": speech_score, "max_score": 10, "feedback": speech_feedback},
+                                    {"name": "Grammar", "score": grammar_score, "max_score": 10, "feedback": grammar_feedback},
+                                    {"name": "Vocabulary", "score": vocab_score, "max_score": 10, "feedback": vocab_feedback},
+                                    {"name": "Filler Words", "score": filler_score, "max_score": 15, "feedback": filler_feedback},
+                                    {"name": "Sentiment", "score": sentiment_score, "max_score": 15, "feedback": sentiment_feedback}
+                                ]
+                            }
+                        ],
+                        "improvement_suggestions": suggestions
+                    }
+
+                    # Display JSON in expandable section
+                    with st.expander("View JSON Output", expanded=False):
+                        st.json(output_data)
+
+                    # Download button for JSON
+                    json_str = json.dumps(output_data, indent=2)
+                    st.download_button(
+                        label="📥 Download JSON Results",
+                        data=json_str,
+                        file_name="speech_analysis_results.json",
+                        mime="application/json",
+                        use_container_width=True
+                    )
                         
                 except Exception as e:
                     st.error(f"An error occurred during analysis: {str(e)}")
@@ -165,52 +216,6 @@ def main():
         else:
             st.error("Please enter some text to analyze.")
 
-    st.write("---")
-    st.subheader("📄 JSON Output")
-
-    # Create JSON structure
-    output_data = {
-        "overall_score": total_score,
-        "word_count": len(transcript_text.split()),
-        "criteria": [
-            {
-                "criterion": "Content & Structure",
-                "score": content_score,
-                "max_score": 40,
-                "components": [
-                    {"name": "Salutation", "score": salutation_score, "max_score": 5},
-                    {"name": "Must-have Keywords", "score": must_score, "max_score": 20},
-                    {"name": "Good-to-have Keywords", "score": good_score, "max_score": 10},
-                    {"name": "Flow", "score": flow_score, "max_score": 5}
-                ]
-            },
-            {
-                "criterion": "Delivery & Style", 
-                "score": delivery_score,
-                "max_score": 60,
-                "components": [
-                    {"name": "Speech Rate", "score": speech_score, "max_score": 10},
-                    {"name": "Grammar", "score": grammar_score, "max_score": 10},
-                    {"name": "Vocabulary", "score": vocab_score, "max_score": 10},
-                    {"name": "Filler Words", "score": filler_score, "max_score": 15},
-                    {"name": "Sentiment", "score": sentiment_score, "max_score": 15}
-                ]
-            }
-        ]
-    }
-
-    # Display JSON
-    st.json(output_data)
-
-    # Download button
-    import json
-    json_str = json.dumps(output_data, indent=2)
-    st.download_button(
-        label="📥 Download JSON Results",
-        data=json_str,
-        file_name="speech_analysis_results.json",
-        mime="application/json"
-    )
 
 if __name__ == "__main__":
     main()
